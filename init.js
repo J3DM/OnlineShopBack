@@ -15,6 +15,7 @@ const mongoUrl="mongodb://localhost:27017/OnlineShop"
 const nodePort=3000
 
 app.listen(nodePort, () => {
+    mongoose.set('useFindAndModify', false)
     mongoose.connect(
         mongoUrl,
         {useNewUrlParser: true, useCreateIndex: true}
