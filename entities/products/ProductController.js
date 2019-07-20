@@ -6,14 +6,14 @@ module.exports = {
         ProductActions.Create(req)
         .then(
             (newProduct)=>{
-                if (!newProduct) throw {msg:"No product created",code:400}
+                if (!newProduct) throw {msg:"No product created",statCode:400}
                 res.status(200).json({product:newProduct})
             }
         )
         .catch(
             (err)=>{
-                if (err.code){
-                    res.status(err.code).json({error:err.msg})
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
                     res.status(400).json({error:err})
                 } 
@@ -25,14 +25,14 @@ module.exports = {
         ProductActions.Update(req)
         .then(
             (updatedProduct)=>{
-                if (!updatedProduct) throw {msg:"No product updated",code:400}
+                if (!updatedProduct) throw {msg:"No product updated",statCode:400}
                 res.status(200).json({product:updatedProduct})
             }
         )
         .catch(
             (err)=>{                
-                if (err.code){
-                    res.status(err.code).json({error:err.msg})
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
                     res.status(400).json({error:err})
                 } 
@@ -44,22 +44,17 @@ module.exports = {
         ProductActions.FindThis(req)
         .then(
             (foundProduct)=>{
-                if (!foundProduct) throw {msg:"No product found with id "+req.params.id,code:404}
+                if (!foundProduct) throw {msg:"No product found with id "+req.params.id,statCode:404}
                 res.status(200).json({product:foundProduct})
             }
         )
         .catch(
-            (err)=>{
-                var code
-                var msg
-                if (!err.code){
-                    code=500
-                    msg=err
+            (err)=>{                
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
-                    code=err.code
-                    msg=err.msg
-                }
-                res.status(code).json({error:msg})
+                    res.status(400).json({error:err})
+                } 
             }
         )
     },
@@ -67,14 +62,14 @@ module.exports = {
         ProductActions.Delete(req)
         .then(
             (deletedProduct)=>{
-                if (!deletedProduct) throw {msg:"No product found to delete",code:400}
+                if (!deletedProduct) throw {msg:"No product found to delete",statCode:400}
                 res.status(200).json({product:deletedProduct})
             }
         )
         .catch(
             (err)=>{
-                if (err.code){
-                    res.status(err.code).json({error:err.msg})
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
                     res.status(400).json({error:err})
                 }
@@ -91,8 +86,8 @@ module.exports = {
         )
         .catch(
             (err)=>{
-                if (err.code){
-                    res.status(err.code).json({error:err.msg})
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
                     res.status(400).json({error:err})
                 }
@@ -109,8 +104,8 @@ module.exports = {
         )
         .catch(
             (err)=>{
-                if (err.code){
-                    res.status(err.code).json({error:err.msg})
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
                 }else{
                     res.status(400).json({error:err})
                 }
