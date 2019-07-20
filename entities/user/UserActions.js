@@ -18,5 +18,14 @@ module.exports={
     },
     Login:(req)=>{
         return User.findOne({email:req.body.email,password:req.body.password})
+    },
+    Update:(req)=>{
+        var updateUser={
+            name:req.body.name,
+            email:req.body.email,
+            password:req.body.password,
+            shoppingCart:req.body.shoppingCart
+        }
+        return User.findByIdAndUpdate(req.body._id,{$set:updateUser},{new:true})
     }
 }
