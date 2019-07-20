@@ -12,5 +12,11 @@ module.exports={
             }
         )
         return newUser.save()
+    },
+    User:(req)=>{
+        return User.findById(req.query._id)
+    },
+    Login:(req)=>{
+        return User.findOne({email:req.body.email,password:req.body.password})
     }
 }
