@@ -3,10 +3,15 @@ const Schema = mongoose.Schema
 
 const cartItem= new Schema(
     {
-        product:{type:Schema.Types.ObjectId, ref:"Product"},
+        _id:{type:Schema.Types.ObjectId, ref:"Product"},
         quantity:{type:Schema.Types.Number,}
     }
 )
+
+const validRoles = {
+    values: ['ADMIN', 'MANAGER', 'CUSTOMER'],
+    message: '{VALUE} is not a valid role'
+}
 
 const userSchema = new Schema(
     {
@@ -14,6 +19,7 @@ const userSchema = new Schema(
         name:{type:Schema.Types.String,required:"User name is required"},
         password:{type:Schema.Types.String,required:"User password is required"},
         email:{type:Schema.Types.String,unique:true,required:"Unique user email is required"},
+        role:{type: Schema.Types.String, enum: validRoles, required: 'User role needed' },
         shoppingList:[cartItem]
     }
 )

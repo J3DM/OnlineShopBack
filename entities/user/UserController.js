@@ -7,7 +7,7 @@ module.exports={
         .then(
             (newUser)=>{
                 if (!newUser) throw {msg:"No user created",statCode:400}
-                res.status(200).json({product:newUser})
+                res.status(200).json({user:newUser})
             }
         )
         .catch(
@@ -25,7 +25,7 @@ module.exports={
         .then(
             (foundUser)=>{
                 if (!foundUser) throw {msg:"No user found",statCode:404}
-                res.status(200).json({product:foundUser})
+                res.status(200).json({user:foundUser})
             }
         )
         .catch(
@@ -43,7 +43,7 @@ module.exports={
         .then(
             (foundUser)=>{
                 if (!foundUser) throw {msg:"No user found",statCode:404}
-                res.status(200).json({product:foundUser})
+                res.status(200).json({user:foundUser})
             }
         )
         .catch(
@@ -59,9 +59,9 @@ module.exports={
     UpdateUser:(req,res)=>{
         UserActions.Update(req)
         .then(
-            (updateUser)=>{
-                if (!updateUser) throw {msg:"No user updated",statCode:400}
-                res.status(200).json({product:updateUser})
+            (updatedUser)=>{
+                if (!updatedUser) throw {msg:"No user updated",statCode:400}
+                res.status(200).json({user:updatedUser})
             }
         )
         .catch(
@@ -74,4 +74,32 @@ module.exports={
             }
         )    
     },
+    UpdateCart:(req,res)=>{
+        UserActions.ValidateUpdateCart(req)
+        .then(
+            (isValid)=>{
+                if (!isValid) throw {msg:"Update cart action notr allowed",statCode:400}
+                if(req.body.action==="ADD"){
+                    return UserActions.AddProductCart(req)
+                }else if (req.body.action==="REMOVE"){
+                    return UserActions.RemoveProductCart(req)
+                }
+            }
+        )
+        .then(
+            (updatedUser)=>{
+                if (!updatedUser) throw {msg:"No user updated",statCode:400}
+                res.status(200).json({user:updatedUser})
+            }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                } 
+            }
+        )
+    }
 }
