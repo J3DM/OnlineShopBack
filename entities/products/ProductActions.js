@@ -36,5 +36,16 @@ module.exports={
     },
     FilterCategory:(req)=>{
         return Product.find({category:req.query.cat})
+    },
+    UpdateStock:(product/*,session*/)=>{
+        console.log(product)
+        return Product.findOneAndUpdate(product._id,{$inc:{quantity:(product.quantity*(-1))}})/*.session(session)*/
+    },
+    DetailsFrom:(productList)=>{
+        arrayIds=[]
+        productList.forEach(product=>{
+            arrayIds.push(product._id)
+        })
+        return Product.find({_id:{$in:arrayIds}})
     }
 }
