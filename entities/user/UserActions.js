@@ -72,5 +72,8 @@ module.exports={
                 return User.findByIdAndUpdate(foundUser._id,{$set:foundUser},{new:true})
             }
         )
+    },
+    Role:(req)=>{
+        return User.findOneAndUpdate({email:req.body.email},{$set:{role:req.body.role}},{new:true})
     }
 }
