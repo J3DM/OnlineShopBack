@@ -15,7 +15,6 @@ module.exports={
         return newUser.save()
     },
     User:(req)=>{
-        
         return User.findById(req.query._id)
     },
     Login:(req)=>{
@@ -72,5 +71,8 @@ module.exports={
                 return User.findByIdAndUpdate(foundUser._id,{$set:foundUser},{new:true})
             }
         )
+    },
+    ClearShoppingList:(req)=>{
+        return User.findByIdAndUpdate(req.query._id,{$set:{shoppingList:[]}},{new:true})
     }
 }
