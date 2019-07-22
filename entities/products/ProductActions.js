@@ -47,5 +47,8 @@ module.exports={
             arrayIds.push(product._id)
         })
         return Product.find({_id:{$in:arrayIds}})
+    },
+    Stock:(req)=>{
+        return Product.findByIdAndUpdate(req.query._id,{$inc:{quantity:(parseInt(req.body.quantity))}},{new:true})
     }
 }
