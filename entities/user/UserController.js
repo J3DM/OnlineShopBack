@@ -101,5 +101,24 @@ module.exports={
                 } 
             }
         )
+    },
+    UpdateRole:(req,res)=>{
+        UserActions.Role(req)
+        .then(
+            (updatedUser)=>{
+                console.log("Result:",updatedUser)
+                if (!updatedUser) throw {msg:"No user updated",statCode:400}
+                res.status(200).json({user:updatedUser})
+            }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                } 
+            }
+        )    
     }
 }
