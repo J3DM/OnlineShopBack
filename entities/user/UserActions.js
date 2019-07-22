@@ -1,12 +1,16 @@
 const User= require("./UserModel")
+const bcrypt = require('bcrypt');
 
 module.exports={
-    Create:(req)=>{
+    Create:async(req)=>{
+        var hashedPassword=await bcrypt.hashSync(req.body.password,10)
+        console.log("Password",req.body.password)
+        console.log("Hashed",hashedPassword)
         var newUser= new User(
             {
                 _id:req.body._id,
                 name:req.body.name,
-                password:req.body.password,
+                password:hashedPassword,
                 email:req.body.email,
                 role:req.body.role,
                 shoppingCart:req.body.shoppingCart
@@ -15,17 +19,24 @@ module.exports={
         return newUser.save()
     },
     User:(req)=>{
-        
         return User.findById(req.query._id)
     },
-    Login:(req)=>{
-        return User.findOne({email:req.body.email,password:req.body.password})
+    Login:async(req)=>{
+        return User.findOne({email:req.body.email})
+            .then(
+                (foundUser)=>{
+                    if(bcrypt.compareSync(req.body.password,foundUser.password)){
+                        return foundUser
+                    }else{
+                        throw {msg:"Unauthirized",statCode:401}
+                    }
+                }
+            )
     },
     Update:(req)=>{
         var updateUser={
             name:req.body.name,
             email:req.body.email,
-            password:req.body.password,
             shoppingCart:req.body.shoppingCart
         }
         return User.findByIdAndUpdate(req.body._id,{$set:updateUser},{new:true})
