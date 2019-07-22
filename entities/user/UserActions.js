@@ -84,5 +84,8 @@ module.exports={
     },
     Role:(req)=>{
         return User.findOneAndUpdate({email:req.body.email},{$set:{role:req.body.role}},{new:true})
+    },
+    ClearShoppingList:(req)=>{
+        return User.findByIdAndUpdate(req.query._id,{$set:{shoppingList:[]}},{new:true})
     }
 }
