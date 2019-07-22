@@ -2,10 +2,8 @@ const User= require("./UserModel")
 const bcrypt = require('bcrypt');
 
 module.exports={
-    Create:async(req)=>{
+    Create:(req)=>{
         var hashedPassword=await bcrypt.hashSync(req.body.password,10)
-        console.log("Password",req.body.password)
-        console.log("Hashed",hashedPassword)
         var newUser= new User(
             {
                 _id:req.body._id,
@@ -21,7 +19,7 @@ module.exports={
     User:(req)=>{
         return User.findById(req.query._id)
     },
-    Login:async(req)=>{
+    Login:(req)=>{
         return User.findOne({email:req.body.email})
             .then(
                 (foundUser)=>{
