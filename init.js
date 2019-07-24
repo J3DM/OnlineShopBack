@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 app.use("/v1", require("./entities/routes"))
 
 const mongoUrl="mongodb://localhost:27017/OnlineShop"
-const nodePort=3000
+const nodePort=3001
 
 app.listen(nodePort, () => {
     mongoose.set('useFindAndModify', false)

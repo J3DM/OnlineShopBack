@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 module.exports={
     Create:(req)=>{
-        var hashedPassword=await bcrypt.hashSync(req.body.password,10)
+        var hashedPassword= bcrypt.hashSync(req.body.password,10)
         var newUser= new User(
             {
                 _id:req.body._id,
@@ -20,9 +20,11 @@ module.exports={
         return User.findById(req.query._id)
     },
     Login:(req)=>{
+        console.log(req.body.email+" - "+req.body.password)
         return User.findOne({email:req.body.email})
             .then(
                 (foundUser)=>{
+                    console.log(foundUser)
                     if(bcrypt.compareSync(req.body.password,foundUser.password)){
                         return foundUser
                     }else{
@@ -65,6 +67,7 @@ module.exports={
                 if(!updated){
                     foundUser.shoppingList.push({
                         _id:req.body.product,
+                        name:req.body.name,
                         quantity:req.body.quantity
                     })
                 }
