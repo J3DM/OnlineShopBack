@@ -2,7 +2,7 @@ const User= require("./UserModel")
 const bcrypt = require('bcrypt');
 
 module.exports={
-    Create:(req)=>{
+    Create:async(req)=>{
         var hashedPassword=await bcrypt.hashSync(req.body.password,10)
         var newUser= new User(
             {
@@ -87,5 +87,8 @@ module.exports={
     },
     ClearShoppingList:(req)=>{
         return User.findByIdAndUpdate(req.query._id,{$set:{shoppingList:[]}},{new:true})
+    },
+    GetId:(userId)=>{
+        return User.findById(userId)
     }
 }
