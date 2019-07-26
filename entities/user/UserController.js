@@ -42,6 +42,7 @@ module.exports={
         UserActions.Login(req)
         .then(
             (foundUser)=>{
+                console.log(foundUser)
                 if (!foundUser) throw {msg:"No user found",statCode:404}
                 res.status(200).json({user:foundUser})
             }
@@ -65,9 +66,10 @@ module.exports={
             }
         )
         .catch(
-            (err)=>{
-                if (err.statCode){
-                    res.status(err.statCode).json({error:err.msg})
+            async (err)=>{
+                if (req.body._id){
+                    oldUser=await UserActions.GetId(req.body._id)
+                    res.status(404).json({user:oldUser,errMsg:err.msg})    
                 }else{
                     res.status(400).json({error:err})
                 } 
@@ -101,5 +103,24 @@ module.exports={
                 } 
             }
         )
+    },
+    UpdateRole:(req,res)=>{
+        UserActions.Role(req)
+        .then(
+            (updatedUser)=>{
+                console.log("Result:",updatedUser)
+                if (!updatedUser) throw {msg:"No user updated",statCode:400}
+                res.status(200).json({user:updatedUser})
+            }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                } 
+            }
+        )    
     }
 }

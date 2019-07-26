@@ -78,5 +78,32 @@ module.exports={
                 } 
             }
         )
+    },
+    VerifySale:(req,res)=>{
+        SaleActions.Verify(req)
+        .then(
+            async(updatedSale)=>{
+                if(!updatedSale) throw {msg:"no sale found",statCode:400}
+                if(updatedSale.state==="REJECTED"){
+                    await UserActions.Delete(updatedSale._id)  
+                    res.status(200).json({
+                        deletedSale:true
+                    })
+                }else{
+                    res.status(200).json({
+                        sale:updatedSale
+                    })
+                }
+            }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                } 
+            }
+        )
     }
 }
