@@ -17,7 +17,7 @@ module.exports={
                     console.log(foundUser.shoppingList)
                     foundUser.shoppingList.forEach(async(product)=>{
                         console.log(product)
-                        var prod=await ProductActions.UpdateStock(product)
+                        var prod=await ProductActions.UpdateStock(product,-1)
                         console.log(prod)
                     })
 
@@ -53,5 +53,23 @@ module.exports={
     },
     User:(req)=>{
         return Sale.find({user:req.query.user})
+    },
+    Verify:(req)=>{
+        return Sale.findOneAndUpdate(req.body._id,{$set:{state:req.body.state}})
+    },
+    Delete:(req)=>{
+        return Sale.findOneAndDelete(req.body._id)
+            .then(
+                (deletedSale)=>{
+                    if(!deletedSale) throw {msg:"No user found with id "+req.body._id,statCode:400} 
+                    console.log(deletedSale.shoppingList)
+                    deletedSale.shoppingList.forEach(async(product)=>{
+                        console.log(product)
+                        var prod=await ProductActions.UpdateStock(product,1)
+                        console.log(prod)
+                    })
+                    return deletedSale
+                }
+            )
     }
 }

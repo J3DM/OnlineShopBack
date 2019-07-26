@@ -37,9 +37,9 @@ module.exports={
     FilterCategory:(req)=>{
         return Product.find({category:req.query.cat})
     },
-    UpdateStock:(product/*,session*/)=>{
+    UpdateStock:(product,value/*,session*/)=>{
         console.log(product)
-        return Product.findOneAndUpdate(product._id,{$inc:{quantity:(product.quantity*(-1))}})/*.session(session)*/
+        return Product.findOneAndUpdate(product._id,{$inc:{quantity:(product.quantity*(value))}})/*.session(session)*/
     },
     DetailsFrom:(productList)=>{
         arrayIds=[]
