@@ -52,6 +52,6 @@ module.exports={
         return Sale.findById(req.query.sale)
     },
     User:(req)=>{
-        return Sale.find({user:req.query.user})
+        return Sale.find({user:req.query.user,state:"PENDING"})
     }
 }
