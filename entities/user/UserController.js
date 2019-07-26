@@ -66,9 +66,10 @@ module.exports={
             }
         )
         .catch(
-            (err)=>{
-                if (err.statCode){
-                    res.status(err.statCode).json({error:err.msg})
+            async (err)=>{
+                if (req.body._id){
+                    oldUser=await UserActions.GetId(req.body._id)
+                    res.status(404).json({user:oldUser,errMsg:err.msg})    
                 }else{
                     res.status(400).json({error:err})
                 } 
