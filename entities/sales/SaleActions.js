@@ -52,7 +52,7 @@ module.exports={
         return Sale.findById(req.query.sale)
     },
     User:(req)=>{
-        return Sale.find({user:req.query.user})
+        return Sale.find({user:req.query.user,state:"PENDING"})
     },
     Verify:(req)=>{
         return Sale.findOneAndUpdate(req.body._id,{$set:{state:req.body.state}})
