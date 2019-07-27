@@ -21,11 +21,11 @@ module.exports={
         return User.findById(req.query._id)
     },
     Login:(req)=>{
-        console.log(req.body.email+" - "+req.body.password)
+        //console.log(req.body.email+" - "+req.body.password)
         return User.findOne({email:req.body.email})
             .then(
                 (foundUser)=>{
-                    console.log(foundUser)
+                    //console.log(foundUser)
                     if(bcrypt.compareSync(req.body.password,foundUser.password)){
                         return foundUser
                     }else{

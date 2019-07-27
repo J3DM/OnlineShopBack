@@ -42,7 +42,7 @@ module.exports={
         UserActions.Login(req)
         .then(
             (foundUser)=>{
-                console.log(foundUser)
+                //console.log(foundUser)
                 if (!foundUser) throw {msg:"No user found",statCode:404}
                 res.status(200).json({user:foundUser})
             }
@@ -108,7 +108,7 @@ module.exports={
         UserActions.Role(req)
         .then(
             (updatedUser)=>{
-                console.log("Result:",updatedUser)
+                //console.log("Result:",updatedUser)
                 if (!updatedUser) throw {msg:"No user updated",statCode:400}
                 res.status(200).json({user:updatedUser})
             }

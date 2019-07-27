@@ -55,7 +55,7 @@ module.exports={
         return Sale.find({user:req.query.user,state:"PENDING"})
     },
     Verify:(req)=>{
-        return Sale.findOneAndUpdate(req.body._id,{$set:{state:req.body.state}})
+        return Sale.findByIdAndUpdate(req.body._id,{$set:{state:req.body.state}},{new:true})
     },
     Delete:(req)=>{
         return Sale.findOneAndDelete(req.body._id)

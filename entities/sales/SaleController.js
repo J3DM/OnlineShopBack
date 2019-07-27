@@ -80,14 +80,17 @@ module.exports={
         )
     },
     VerifySale:(req,res)=>{
+        console.log("Verify body",req.body)
         SaleActions.Verify(req)
         .then(
             async(updatedSale)=>{
+                console.log("verify result",updatedSale)
                 if(!updatedSale) throw {msg:"no sale found",statCode:400}
                 if(updatedSale.state==="REJECTED"){
                     await UserActions.Delete(updatedSale._id)  
                     res.status(200).json({
-                        deletedSale:true
+                        deletedSale:true,
+                        sale:updatedSale
                     })
                 }else{
                     res.status(200).json({
