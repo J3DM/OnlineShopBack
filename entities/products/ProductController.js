@@ -129,5 +129,23 @@ module.exports = {
                 }
             }
         )
+    },
+    FilterName:(req,res)=>{
+       ProductActions.Name(req)
+       .then(
+        (productList)=>{
+            if(!productList)throw{msd:"No products found",statCode:404}
+            res.status(200).json({products:productList})
+        }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                }
+            }
+        ) 
     }
 }

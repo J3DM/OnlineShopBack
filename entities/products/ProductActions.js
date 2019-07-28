@@ -50,5 +50,8 @@ module.exports={
     },
     Stock:(req)=>{
         return Product.findByIdAndUpdate(req.query._id,{$inc:{quantity:(parseInt(req.body.quantity))}},{new:true})
+    },
+    Name:(req)=>{
+        return Product.find({name:{$regex:".*"+req.query.name+".*",$options:"i"}})
     }
 }

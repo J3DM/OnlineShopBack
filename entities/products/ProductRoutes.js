@@ -8,6 +8,7 @@ app.put("/stock",ProductController.UpdateStock)
 app.put("",ProductController.UpdateProduct)
 app.get("/list",ProductController.ListProducts)
 app.get("/category",ProductController.CategoryProducts)
+app.get("/name",ProductController.FilterName)
 app.get("",ProductController.GetProduct) 
 app.delete("",ProductController.DeleteProduct)
 
