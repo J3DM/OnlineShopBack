@@ -58,8 +58,8 @@ module.exports={
         return Sale.findByIdAndUpdate(req.body._id,{$set:{state:req.body.state}},{new:true})
     },
     Delete:(req)=>{
-        return Sale.findOneAndDelete(req.body._id)
-            .then(
+        return Sale.findByIdAndDelete(req.body._id)
+            /*.then(
                 (deletedSale)=>{
                     if(!deletedSale) throw {msg:"No user found with id "+req.body._id,statCode:400} 
                     console.log(deletedSale.shoppingList)
@@ -70,6 +70,6 @@ module.exports={
                     })
                     return deletedSale
                 }
-            )
+            )*/
     }
 }

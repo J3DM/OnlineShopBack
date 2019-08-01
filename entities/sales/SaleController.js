@@ -86,7 +86,7 @@ module.exports={
             async(updatedSale)=>{
                 console.log("verify result",updatedSale)
                 if(!updatedSale) throw {msg:"no sale found",statCode:400}
-                if(updatedSale.state==="REJECTED"){
+                /*if(updatedSale.state==="REJECTED"){
                     await UserActions.Delete(updatedSale._id)  
                     res.status(200).json({
                         deletedSale:true,
@@ -96,7 +96,10 @@ module.exports={
                     res.status(200).json({
                         sale:updatedSale
                     })
-                }
+                }*/
+                res.status(200).json({
+                    sale:updatedSale
+                })
             }
         )
         .catch(
