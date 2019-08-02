@@ -16,9 +16,9 @@ module.exports={
                     price=0
                     console.log(foundUser.shoppingList)
                     foundUser.shoppingList.forEach(async(product)=>{
-                        console.log(product)
-                        var prod=await ProductActions.UpdateStock(product,-1)
-                        console.log(prod)
+                        // console.log(product)
+                        var prod=await ProductActions.UpdateStock(product._id,-1*product.quantity)
+                        // console.log(prod)
                     })
 
                     var fullProductDetails=await ProductActions.DetailsFrom(foundUser.shoppingList)

@@ -29,10 +29,10 @@ module.exports={
         return Product.findById(req.query.id)
     },
     Delete:(req)=>{
-        return Product.findByIdAndDelete(req.query.id)
+        return Product.findByIdAndUpdate(req.query.id,{$set:{state:"DELETED"}})
     },
     List:()=>{
-        return Product.find()
+        return Product.find({state:{$ne:"DELETED"}})
     },
     FilterCategory:(req)=>{
         return Product.find({category:req.query.cat})
@@ -47,6 +47,9 @@ module.exports={
             arrayIds.push(product._id)
         })
         return Product.find({_id:{$in:arrayIds}})
+    },
+    UpdateStock:(_id,value)=>{
+        return Product.findByIdAndUpdate(_id,{$inc:{quantity:value}},{new:true})
     },
     Stock:(req)=>{
         return Product.findByIdAndUpdate(req.query._id,{$inc:{quantity:(parseInt(req.body.quantity))}},{new:true})

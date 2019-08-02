@@ -1,5 +1,6 @@
 const SaleActions= require("./SaleActions")
 const UserActions= require("../user/UserActions")
+const ProductActions= require("../products/ProductActions")
 
 const mongoose = require('mongoose')
 
@@ -86,17 +87,12 @@ module.exports={
             async(updatedSale)=>{
                 console.log("verify result",updatedSale)
                 if(!updatedSale) throw {msg:"no sale found",statCode:400}
-                /*if(updatedSale.state==="REJECTED"){
-                    await UserActions.Delete(updatedSale._id)  
-                    res.status(200).json({
-                        deletedSale:true,
-                        sale:updatedSale
-                    })
-                }else{
-                    res.status(200).json({
-                        sale:updatedSale
-                    })
-                }*/
+                if(updatedSale.state==="REJECTED"){
+                    var productList= updatedSale.products
+                    console.log(productList)
+                    productList.map(async(product)=>await ProductActions.UpdateStock(product._id,product.quantity))
+                    
+                }
                 res.status(200).json({
                     sale:updatedSale
                 })

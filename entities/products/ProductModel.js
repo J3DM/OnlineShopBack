@@ -8,7 +8,8 @@ const productSchema= new Schema({
     price:{type:Schema.Types.Number,required:"Product price is required"},
     quantity:{type:Schema.Types.Number,required:"Product quantity is required"},
     description:{type:Schema.Types.String,required:"Product description is required"},
-    image:{type:Schema.Types.String,required:"Product image is required"}
+    image:{type:Schema.Types.String,required:"Product image is required"},
+    state:{type:Schema.Types.String, default:"ACTIVE"}
 })
 
 module.exports = mongoose.model('Product', productSchema)
