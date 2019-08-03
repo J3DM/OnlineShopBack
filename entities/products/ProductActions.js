@@ -56,5 +56,8 @@ module.exports={
     },
     Name:(req)=>{
         return Product.find({name:{$regex:".*"+req.query.name+".*",$options:"i"}})
+    },
+    ListAll:(req)=>{
+        return Product.find()
     }
 }
