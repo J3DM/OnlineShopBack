@@ -165,5 +165,23 @@ module.exports = {
                 }
             }
         )
+    },
+    ActivateProduct:(req,res)=>{
+        ProductActions.Activate(req)
+        .then(
+            (activatedProduct)=>{
+                if (!activatedProduct) throw {msg:"No product found to delete",statCode:400}
+                res.status(200).json({product:activatedProduct})
+            }
+        )
+        .catch(
+            (err)=>{
+                if (err.statCode){
+                    res.status(err.statCode).json({error:err.msg})
+                }else{
+                    res.status(400).json({error:err})
+                }
+            }
+        )
     }
 }

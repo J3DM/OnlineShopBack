@@ -5,6 +5,7 @@ const ProductController=require("./ProductController")
 
 app.post("",ProductController.CreateProduct)
 app.put("/stock",ProductController.UpdateStock)
+app.put("/activate",ProductController.ActivateProduct)
 app.put("",ProductController.UpdateProduct)
 app.get("/list",ProductController.ListProducts)
 app.get("/listAll",ProductController.ListAllProducts)

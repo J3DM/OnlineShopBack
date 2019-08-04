@@ -29,7 +29,7 @@ module.exports={
         return Product.findById(req.query.id)
     },
     Delete:(req)=>{
-        return Product.findByIdAndUpdate(req.query.id,{$set:{state:"DELETED"}})
+        return Product.findByIdAndUpdate(req.query.id,{$set:{state:"DELETED"}},{new:true})
     },
     List:()=>{
         return Product.find({state:{$ne:"DELETED"}})
@@ -59,5 +59,8 @@ module.exports={
     },
     ListAll:(req)=>{
         return Product.find()
+    },
+    Activate:(req)=>{
+        return Product.findByIdAndUpdate(req.query.id,{$set:{state:"ACTIVE"}},{new:true})
     }
 }
