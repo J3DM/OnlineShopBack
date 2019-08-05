@@ -35,7 +35,13 @@ module.exports={
         return Product.find({state:{$ne:"DELETED"}})
     },
     FilterCategory:(req)=>{
-        return Product.find({category:req.query.cat})
+        if(req.query.showAll==="true"){
+            console.log("Show all producs of the category",req.query.cat)
+            return Product.find({category:req.query.cat})
+        }else{
+            console.log("Only Available producs of the category",req.query.cat)
+            return Product.find({category:req.query.cat,state:{$ne:"DELETED"}})
+        }
     },
     UpdateStock:(product,value/*,session*/)=>{
         console.log(product)
@@ -58,7 +64,11 @@ module.exports={
         return Product.find({name:{$regex:".*"+req.query.name+".*",$options:"i"}})
     },
     ListAll:(req)=>{
-        return Product.find()
+        if(req.query.showAll==="true"){
+            return Product.find()
+        }else{
+            return Product.find({state:{$ne:"DELETED"}})
+        }
     },
     Activate:(req)=>{
         return Product.findByIdAndUpdate(req.query.id,{$set:{state:"ACTIVE"}},{new:true})
