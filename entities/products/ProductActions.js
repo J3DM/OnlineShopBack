@@ -73,5 +73,30 @@ module.exports={
     },
     Activate:(req)=>{
         return Product.findByIdAndUpdate(req.query.id,{$set:{state:"ACTIVE"}},{new:true})
+    },
+    Count:(req)=>{
+        if (req.query.name){
+            console.log("Counting query by name")
+            if(req.query.showAll==="true"){
+                return Product.countDocuments({name:{$regex:".*"+req.query.name+".*",$options:"i"}})
+            }else{
+                return Product.countDocuments({name:{$regex:".*"+req.query.name+".*",$options:"i",state:{$ne:"DELETED"}}})
+            }
+        }else if(req.query.cat){
+            console.log("Counting query by category")
+            if(req.query.showAll==="true"){
+                return Product.countDocuments({category:req.query.cat})
+            }else{
+                return Product.countDocuments({category:req.query.cat,state:{$ne:"DELETED"}})
+            }
+        }else{
+            console.log("Counting all products")
+            if(req.query.showAll==="true"){
+                return Product.countDocuments()
+            }else{
+                return Product.countDocuments({state:{$ne:"DELETED"}})
+            }
+        }
+        
     }
 }

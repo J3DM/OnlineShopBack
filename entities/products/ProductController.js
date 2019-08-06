@@ -1,4 +1,5 @@
 const ProductActions= require("./ProductActions")
+const ProductArray=require("./PaginateProducts")
 
 module.exports = {
 
@@ -81,7 +82,7 @@ module.exports = {
         .then(
             (productList)=>{
                 if(!productList)throw{msd:"No products found",statCode:404}
-                res.status(200).json({products:productList})
+                res.status(200).json(ProductArray.Paginate(productList,req))
             }
         )
         .catch(
@@ -97,9 +98,9 @@ module.exports = {
     CategoryProducts:(req,res)=>{
         ProductActions.FilterCategory(req)
         .then(
-            (productList)=>{
+            async (productList)=>{
                 if(!productList)throw{msd:"No products found",statCode:404}
-                res.status(200).json({products:productList})
+                res.status(200).json(ProductArray.Paginate(productList,req))
             }
         )
         .catch(
@@ -133,10 +134,10 @@ module.exports = {
     FilterName:(req,res)=>{
        ProductActions.Name(req)
        .then(
-        (productList)=>{
-            if(!productList)throw{msd:"No products found",statCode:404}
-            res.status(200).json({products:productList})
-        }
+            (productList)=>{
+                if(!productList)throw{msd:"No products found",statCode:404}
+                res.status(200).json(ProductArray.Paginate(productList,req))
+            }
         )
         .catch(
             (err)=>{
@@ -151,9 +152,9 @@ module.exports = {
     ListAllProducts:(req,res)=>{
         ProductActions.ListAll(req)
         .then(
-            (productList)=>{
+            async (productList)=>{
                 if(!productList)throw{msd:"No products found",statCode:404}
-                res.status(200).json({products:productList})
+                res.status(200).json(ProductArray.Paginate(productList,req))
             }
         )
         .catch(
