@@ -149,7 +149,7 @@ module.exports = {
         ) 
     },
     ListAllProducts:(req,res)=>{
-        ProductActions.ListAll()
+        ProductActions.ListAll(req)
         .then(
             (productList)=>{
                 if(!productList)throw{msd:"No products found",statCode:404}
