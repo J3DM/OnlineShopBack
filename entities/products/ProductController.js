@@ -98,7 +98,7 @@ module.exports = {
     CategoryProducts:(req,res)=>{
         ProductActions.FilterCategory(req)
         .then(
-            async (productList)=>{
+            (productList)=>{
                 if(!productList)throw{msd:"No products found",statCode:404}
                 res.status(200).json(ProductArray.Paginate(productList,req))
             }
