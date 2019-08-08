@@ -11,6 +11,14 @@ app.use(bodyParser.json())
 
 app.use("/v1", require("./entities/routes"))
 
+app.get('/',function(req,res){
+    res.writeHead(200, {
+        'Content-Type': 'text/plain'
+    });
+    res.write('Backend Ready to recieve requests!');
+    res.end();
+})
+
 const mongoUrl="mongodb://localhost:27017/OnlineShop"
 const nodePort=3001
 
