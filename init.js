@@ -19,7 +19,8 @@ app.get('/',function(req,res){
     res.end();
 })
 
-const mongoUrl="mongodb://localhost:27017/OnlineShop"
+//const mongoUrl="mongodb://localhost:27017/OnlineShop"
+const mongoUrl= process.env.MONGODB_URI
 const nodePort=3001
 
 app.listen(nodePort, () => {
